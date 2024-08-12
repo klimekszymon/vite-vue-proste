@@ -1,5 +1,6 @@
 import {defineConfig} from 'vitest/config';
-import type {PluginOption} from 'vite';
+import type {PluginOption } from 'vite';
+import  { loadEnv, splitVendorChunkPlugin} from 'vite';
 import vue from '@vitejs/plugin-vue';
 import {resolve} from 'path';
 import {visualizer} from 'rollup-plugin-visualizer';
@@ -8,10 +9,14 @@ import postcssPresetEnv from 'postcss-preset-env';
 import eslint from '@nabla/vite-plugin-eslint';
 import browserslistToEsbuild from 'browserslist-to-esbuild';
 import jsxPlugin from '@vitejs/plugin-vue-jsx';
+import packageJson from './package.json';
+
+// const env = loadEnv('production', process.cwd());
 
 export default defineConfig({
   define: {
     'process.env': process.env,
+    // 'appVersion' : JSON.stringify(packageJson.version)
   },
   base: './',
   server: {
@@ -23,6 +28,7 @@ export default defineConfig({
   build: {
     target: browserslistToEsbuild(),
     emptyOutDir: true,
+    sourcemap: true,
     rollupOptions: {
       output: {
         chunkFileNames: 'js/[name].[hash].js',
@@ -36,6 +42,7 @@ export default defineConfig({
   },
   plugins: [
     vue(),
+    // splitVendorChunkPlugin (),
     jsxPlugin(),
     visualizer({
       filename: './visualizer/index.html',
@@ -46,9 +53,9 @@ export default defineConfig({
     include: ['src/**/*.{test, spec}.{js,jsx,ts,tsx}'],
     environment: 'jsdom',
     globals: true,
-    transformMode: {
-      web: [/.[tj]sx$/],
-    },
+    // transformMode: {
+    //   web: [/.[tj]sx$/],
+    // },
   },
   css: {
     postcss: {

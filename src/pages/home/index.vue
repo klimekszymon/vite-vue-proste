@@ -18,6 +18,7 @@ const {count, doubleCount} = storeToRefs(countState);
     <div class="btn-group">
       <DemoButton id="inc_btn" @click="countState.increment">inc</DemoButton>
       <DemoButton id="dec_btn" @click="countState.reduce">dec</DemoButton>
+      <!-- {{ import.meta.env.VUE_APP_API_URL }} -->
     </div>
   </main>
 </template>

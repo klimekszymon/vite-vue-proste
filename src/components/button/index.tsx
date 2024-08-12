@@ -9,6 +9,7 @@ export default defineComponent({
     default: string | undefined;
   }>,
   setup(props, {slots}) {
+    // @ts-ignore
     return () => <button onClick={props.onClick}>{slots.default?.()}</button>;
   },
 });
